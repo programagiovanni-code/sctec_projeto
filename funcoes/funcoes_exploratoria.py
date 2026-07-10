@@ -1,3 +1,5 @@
+import pandas as pd
+
 def analise_dados(df):
     tabela_resumo = pd.DataFrame({
         'Tipos de Dados': df.dtypes,        
