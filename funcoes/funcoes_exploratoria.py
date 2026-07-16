@@ -12,12 +12,6 @@ def analise_dados(df):
 
     return tabela_resumo
 
-def resumo_estatistico(df):
-    resumo_completo = df.describe(include='all').round(2)
-    resumo_completo = resumo_completo.fillna('-')
-
-    return resumo_completo
-
 def contagem_valores(df):
     print("--- RELATÓRIO DE VALORES ÚNICOS E CONTAGENS ---")
     for column in df.columns:

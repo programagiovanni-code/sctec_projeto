@@ -39,3 +39,53 @@ def colunas_datetime(df):
     df_clean.drop(columns=['date'], inplace=True)
 
     return df_clean
+
+def criar_painel_diagnostico(df):
+    relatorio = []
+    colunas_numericas = df.select_dtypes(include=[np.number]).columns
+    
+    for col in colunas_numericas:
+        # Skew
+        skew_val = df[col].skew()
+        log_sugerido = "SIM" if abs(skew_val) > 1.5 else "Não"
+        
+        # Outliers (Método IQR)
+        q1 = df[col].quantile(0.25)
+        q3 = df[col].quantile(0.75)
+        iqr = q3 - q1
+        limite_sup = q3 + 1.5 * iqr
+        limite_inf = q1 - 1.5 * iqr
+        total_outliers = df[(df[col] > limite_sup) | (df[col] < limite_inf)].shape[0]
+        pct_outliers = (total_outliers / len(df)) * 100
+        
+        # Ruídos (Valores zerados bizarros)
+        min_val = df[col].min()
+        ruido_zero = "Não"
+        if min_val == 0 and col in ['bedrooms', 'bathrooms', 'sqft_living']:
+            ruido_zero = "Suspeito (Zero)"
+            
+        # Conclusão
+        acoes = []
+        if abs(skew_val) > 1.5: acoes.append("Aplicar LOG")
+        if pct_outliers > 5: acoes.append("Suavizar Outliers (Capping)")
+        elif pct_outliers > 0: acoes.append("Checar Extremos")
+        if ruido_zero != "Não": acoes.append("Tratar Zeros")
+        
+        acao_final = " + ".join(acoes) if acoes else "Manter como está"
+        
+        relatorio.append({
+            'Coluna': col,
+            'Assimetria (Skew)': round(skew_val, 2),
+            'Precisa de LOG?': log_sugerido,
+            'Qtd Outliers': total_outliers,
+            '% Outliers': round(pct_outliers, 2),
+            'Possível Ruído?': ruido_zero,
+            'Ação Recomendada': acao_final})
+        
+    return pd.DataFrame(relatorio).sort_values(by='% Outliers', ascending=False)
+
+def resumo_estatistico(df):
+    resumo_completo = df.describe(include='all').round(2)
+    resumo_completo = resumo_completo.fillna('-')
+
+    return resumo_completo
