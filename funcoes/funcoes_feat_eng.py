@@ -84,6 +84,45 @@ def criar_painel_diagnostico(df):
         
     return pd.DataFrame(relatorio).sort_values(by='% Outliers', ascending=False)
 
+def obter_listas_tratamento(df):
+    colunas_log = []
+    colunas_capping = []
+    colunas_extremos = []
+    colunas_zeros = []
+    
+    colunas_numericas = df.select_dtypes(include=[np.number]).columns
+    
+    for col in colunas_numericas:
+        # Skew
+        skew_val = df[col].skew()
+        if abs(skew_val) > 1.5:
+            colunas_log.append(col)
+  
+        # Outliers (Método IQR)
+        q1 = df[col].quantile(0.25)
+        q3 = df[col].quantile(0.75)
+        iqr = q3 - q1
+        limite_sup = q3 + 1.5 * iqr
+        limite_inf = q1 - 1.5 * iqr
+        total_outliers = df[(df[col] > limite_sup) | (df[col] < limite_inf)].shape[0]
+        pct_outliers = (total_outliers / len(df)) * 100
+        
+        if pct_outliers > 5:
+            colunas_capping.append(col)
+        elif pct_outliers > 0:
+            colunas_extremos.append(col)
+            
+        # Ruídos
+        min_val = df[col].min()
+        if min_val == 0:
+            colunas_zeros.append(col)
+            
+    return {
+        'log': colunas_log,
+        'capping': colunas_capping,
+        'extremos': colunas_extremos,
+        'zeros': colunas_zeros}
+
 def resumo_estatistico(df):
     resumo_completo = df.describe(include='all').round(2)
     resumo_completo = resumo_completo.fillna('-')
