@@ -53,9 +53,12 @@ SCTEC_PROJETO/
 ├── raw/                # Dados originais do repositório
 ├── processed/          # Dados processados pelo script de limpeza
 ├── tratamento/         # Notebooks de EDA e Limpeza Inicial
+│   ├── data_cleaning.ipynb
+│   └── feature_engineering.ipynb
+│   └── machine_learning.ipynb
 ├── teste_final/        # Segunda tentativa de Feature Engineering e Modelagem
-├── models/             
-│   └── v1/             # Artefatos exportados (.pkl e .json de métricas)
+│   └── feature_engineering_2.ipynb
+│   └── machine_learning_2.ipynb
 ├── README.md
 └── requirements.txt
 ```
