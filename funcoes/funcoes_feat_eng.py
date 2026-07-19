@@ -2,12 +2,12 @@ import pandas as pd
 import numpy as np
 
 def colunas_datetime(df):
-    """
+    '''
     Ajusta o dataframe para o datetime e cria novas colunas de tempo
     
     Parâmetro:
     - df: DataFrame de entrada
-    """
+    '''
     # Preparação
     df_clean = df.copy()
     df_clean['date'] = pd.to_datetime(df_clean['date'])
@@ -47,7 +47,7 @@ def criar_painel_diagnostico(df):
     for col in colunas_numericas:
         # Skew
         skew_val = df[col].skew()
-        log_sugerido = "SIM" if abs(skew_val) > 1.5 else "Não"
+        log_sugerido = 'SIM' if abs(skew_val) > 1.5 else 'Não'
         
         # Outliers (Método IQR)
         q1 = df[col].quantile(0.25)
@@ -60,18 +60,18 @@ def criar_painel_diagnostico(df):
         
         # Ruídos (Valores zerados bizarros)
         min_val = df[col].min()
-        ruido_zero = "Não"
+        ruido_zero = 'Não'
         if min_val == 0 and col in ['bedrooms', 'bathrooms', 'sqft_living']:
-            ruido_zero = "Suspeito (Zero)"
+            ruido_zero = 'Suspeito (Zero)'
             
         # Conclusão
         acoes = []
-        if abs(skew_val) > 1.5: acoes.append("Aplicar LOG")
-        if pct_outliers > 5: acoes.append("Suavizar Outliers (Capping)")
-        elif pct_outliers > 0: acoes.append("Checar Extremos")
-        if ruido_zero != "Não": acoes.append("Tratar Zeros")
+        if abs(skew_val) > 1.5: acoes.append('Aplicar LOG')
+        if pct_outliers > 5: acoes.append('Suavizar Outliers (Capping)')
+        elif pct_outliers > 0: acoes.append('Checar Extremos')
+        if ruido_zero != 'Não': acoes.append('Tratar Zeros')
         
-        acao_final = " + ".join(acoes) if acoes else "Manter como está"
+        acao_final = ' + '.join(acoes) if acoes else 'Manter como está'
         
         relatorio.append({
             'Coluna': col,
