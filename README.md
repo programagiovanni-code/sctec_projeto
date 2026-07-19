@@ -23,18 +23,18 @@ A precificação imobiliária é sensível a múltiplas variáveis físicas e de
 3. **Feature Engineering:**
    * Extração de matriz temporal (ano, mês, final de semana).
    * Criação de indicadores de densidade e proporção (`bath_per_bed`, `bed_per_floor`).
-   * Cálculo esférico rigoroso de distâncias de infraestrutura utilizando a fórmula de Haversine (substituindo aproximações planas).
+   * Cálculo esférico de distâncias de infraestrutura utilizando a fórmula de Haversine (substituindo aproximações planas).
 4. **Modelagem e Validação:**
    * Avaliação comparativa entre regressões lineares e ensembles baseados em árvores.
    * Tuning via `RandomizedSearchCV`.
    * Desenvolvimento de métrica customizada (Scorer) baseada em MAE absoluto na escala nominal em Dólares após a transformação `np.log1p`.
 
-## Versão do Modelo (v1) e Resultados
-O campeão preditivo no conjunto de testes foi o **XGBoost Otimizado em Dólares**, preservado no diretório `models/v1/`.
+## Versão do Modelo e Resultados
+O campeão preditivo no conjunto de testes foi o **XGBoost Otimizado em Dólares**.
 
 **Métricas (Dados de Teste):**
-* **R² (Coeficiente de Determinação):** 0.9084
-* **MAE (Erro Absoluto Médio):** U$ 61.312,22
+* **R² (Coeficiente de Determinação):** 0.9089
+* **MAE (Erro Absoluto Médio):** U$ 60,686.89
 
 **Veredito de Negócio:**
 As predições apresentam um desvio médio de US$ 61 mil do valor de mercado. Devido à presença massiva de imóveis de alto padrão em King County (muitos superando U$ 1M), uma explicabilidade da variância (R²) próxima de 91% consolida o algoritmo como um excelente balizador analítico para suporte rápido e escalável à decisão na corretagem.
@@ -64,4 +64,4 @@ SCTEC_PROJETO/
 ```
 
 ## Apresentação
-[🔗 Inserir Link do Vídeo Google Drive]
+https://drive.google.com/file/d/1oY9dalY69PAZ8tJ2nJRaow7d7DGiCpfB/view?usp=sharing 
