@@ -33,7 +33,7 @@ Construção de um pipeline preditivo end-to-end para estimar o valor de venda d
    * Desenvolvimento de métrica customizada (Scorer) e comparativos.
 
 ## Versão do Modelo e Resultados
-O campeão preditivo no conjunto de testes foi o **XGBoost Otimizado**.
+O campeão preditivo no conjunto de testes foi o **XGBoost Otimizado** utilizando a versão 2 do dataframe.
 
 **Métricas (Dados de Teste):**
 * **R² (Coeficiente de Determinação):** 0.9093
