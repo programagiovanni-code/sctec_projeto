@@ -4,7 +4,6 @@ import numpy as np
 def colunas_datetime(df):
     '''
     Ajusta o dataframe para o datetime e cria novas colunas de tempo
-    
     Parâmetro:
     - df: DataFrame de entrada
     '''
@@ -41,6 +40,9 @@ def colunas_datetime(df):
     return df_clean
 
 def criar_painel_diagnostico(df):
+    ''' Cria uma tabela com bases matematicas onde indica quais colunas precisam ser avaliadas antes do treinamento do modelo
+        Parâmetro:
+    - df: DataFrame de entrada'''
     relatorio = []
     colunas_numericas = df.select_dtypes(include=[np.number]).columns
     
@@ -85,6 +87,9 @@ def criar_painel_diagnostico(df):
     return pd.DataFrame(relatorio).sort_values(by='% Outliers', ascending=False)
 
 def obter_listas_tratamento(df):
+    ''' Cria uma lista com bases matematicas onde indica quais colunas precisam ser avaliadas antes do treinamento do modelo separado por categorias
+        Parâmetro:
+    - df: DataFrame de entrada'''
     colunas_log = []
     colunas_capping = []
     colunas_extremos = []
@@ -124,6 +129,9 @@ def obter_listas_tratamento(df):
         'zeros': colunas_zeros}
 
 def resumo_estatistico(df):
+    ''' Describe mais completo
+    Parâmetro:
+    - df: DataFrame de entrada'''
     resumo_completo = df.describe(include='all').round(2)
     resumo_completo = resumo_completo.fillna('-')
 
