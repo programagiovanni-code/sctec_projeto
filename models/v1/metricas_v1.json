@@ -1,8 +1,8 @@
 {
     "modelo": "XGBoost_Otimizado",
-    "r2_score": 0.899943881275321,
-    "mae_usd": 64796.37156575521,
-    "mse_usd": 15962651759.74468,
-    "rmse_usd": 126343.3882707943,
+    "r2_score": 0.90078715102802,
+    "mae_usd": 67014.4389041898,
+    "mse_usd": 15398802326.19616,
+    "rmse_usd": 124091.9108008099,
     "parametros": "learning_rate=0.05, max_depth=6"
 }
